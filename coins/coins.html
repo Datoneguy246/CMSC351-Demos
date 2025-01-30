@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CMSC351 Algorithms</title>
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <header>
+        <h1>Coin Changing Algorithms</h1>
+        Value to represent: <input id="in_x" type="number" value="15"><br>
+        Enter the values for your currency: <input id="in_cur" type="text" value="25, 12, 10, 5, 1"><br>
+        <p><i>I'm too lazy to validate or handle input properly... make sure your currency is in descending order and has a penny</i></p>
+        <button onclick="calc()">Calculate</button>
+        <hr>        
+    </header>
+    <main>
+        <p id="greedy">Greedy: </p><br>
+        <p id="dynamic">Dynamic: </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Value</th>
+                    <th>Coins Required</th>
+                    <th>Last Coin Used</th>
+                </tr>
+            </thead>
+            <tbody id="t">
+                
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <hr>
+        <a href="coins.js">See code</a>
+    </footer>
+    <script src="coins.js"></script>
+</html>
