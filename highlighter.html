@@ -13,7 +13,7 @@
     <pre id="output" class="language-javascript"></pre>
 
     <script>
-        async function lintScript(file) {
+        async function highlightScript(file) {
             try {
                 const response = await fetch(file);
                 const code = await response.text();
@@ -39,7 +39,7 @@
         window.onload = function () {
             let filename = getCookie('filename');
             console.log(filename);
-            lintScript(filename);
+            highlightScript(filename);
         };
     </script>
 </body>
