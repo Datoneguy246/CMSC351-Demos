@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linter Output</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
+</head>
+
+<body>
+    <pre id="output" class="language-javascript"></pre>
+
+    <script>
+        async function lintScript(file) {
+            try {
+                const response = await fetch(file);
+                const code = await response.text();
+                document.getElementById("output").textContent = code;
+
+                // Highlight the code block with Prism.js
+                Prism.highlightElement(document.getElementById("output"));
+            } catch (error) {
+                document.getElementById("output").textContent = "Error fetching file!";
+            }
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        window.onload = function () {
+            let filename = getCookie('filename');
+            console.log(filename);
+            lintScript(filename);
+        };
+    </script>
+</body>
+
+</html>

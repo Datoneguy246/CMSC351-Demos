@@ -30,7 +30,18 @@
     </main>
     <footer>
         <hr>
-        <a href="coins.js">See code</a>
+        <button onclick="showcode()">See code</a>
     </footer>
     <script src="coins.js"></script>
+    <script>
+        function showcode() {
+            // Set the cookie with a valid key=value format
+             document.cookie = "filename=./coins/coins.js; path=/"; // Cookie is set for the entire domain
+    
+            // Create an anchor element and navigate to linter.html
+            let a = document.createElement('a');
+            a.setAttribute("href", "../linter.html");
+            a.click();
+        }   
+    </script>
 </html>

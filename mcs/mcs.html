@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CMSC351 Algorithms</title>
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <header>
+        <h1>Maximum Contiguous Sum</h1>
+        Enter your list: <input id="in_lst" type="text" value="25, -26, 10, 5, 4, -4, 11, -6"><br>
+        <button onclick="calc()">Calculate</button>
+        <hr>        
+    </header>
+    <main>
+        <p id="mcs">Maximum Contiguous Sum: </p>
+        <p><i>This calculation uses the divide and conquer approach</i></p>
+    </main>
+    <footer>
+        <hr>
+        <button onclick="showcode()">See code</a>
+    </footer>
+    <script src="mcs.js"></script>
+    <script>
+        function showcode() {
+            // Set the cookie with a valid key=value format
+             document.cookie = "filename=./mcs/mcs.js; path=/"; // Cookie is set for the entire domain
+    
+            // Create an anchor element and navigate to linter.html
+            let a = document.createElement('a');
+            a.setAttribute("href", "../linter.html");
+            a.click();
+        }   
+    </script>
+</html>
