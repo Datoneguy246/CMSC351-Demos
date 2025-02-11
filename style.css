@@ -10,3 +10,7 @@ table, tr, td, th {
 .green_txt {
     color: green;
 }
+
+ul {
+    margin: 0%;
+}
