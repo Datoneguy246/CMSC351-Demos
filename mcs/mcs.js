@@ -4,7 +4,7 @@ Recursive function takes in:
 - l: the left index representing the start of the contiguous sub-list (inclusive)
 - r: the right index representing the start of the contiguous sub-list (inclusive)
 */
-function mcs(lst, l, r) {
+function mcs_divide_and_conquer(lst, l, r) {
     // Base case: Single element sub-list
     if (l == r) {
         return lst[l]; 
@@ -14,10 +14,10 @@ function mcs(lst, l, r) {
     let c = Math.floor((l + r) / 2);
 
     // Get max sum of sub-list to the left of c
-    let lmax = mcs(lst, l, c);
+    let lmax = mcs_divide_and_conquer(lst, l, c);
 
     // Get max sum of sub-list to the right of c
-    let rmax = mcs(lst, c+1, r);
+    let rmax = mcs_divide_and_conquer(lst, c+1, r);
 
     // Get straddling max sum of a sublist anchored to c
     let lhmax = -Infinity; let lhsum = 0;
@@ -39,16 +39,48 @@ function mcs(lst, l, r) {
     return max_sum;
 }
 
+function mcs_kadane(lst) {
+    // Keep track of last M_i value
+    let last_mi = -Infinity;
+
+    // Keep track of overall maximum value
+    let max_overall = -Infinity;
+
+    // Iterate through list
+    for (let i = 0; i < lst.length; i++) {
+        // Calculate this M_i value: max of (last_mi + lst[i], lst[i])
+        let lstI = lst[i];
+        let mi = Math.max(last_mi + lstI, lstI);
+
+        // Check if this is the new maximum overall value
+        if (mi > max_overall)
+            max_overall = mi;
+
+        // Set last_mi
+        last_mi = mi;
+
+        // Display on table (HTML Display)
+        addToTable(lstI, mi, max_overall, mi == lstI);
+    }
+
+    // Return maximum sum
+    return max_overall;
+}
+
 /*
 HTML FUNCTIONS FOR WEBPAGE
 */
 function calc() {
+    kadaneTable.innerHTML = "";
     let lst_raw = document.getElementById("in_lst").value.split(',');
     let lst = [];
     for (let i = 0; i < lst_raw.length; i++) {
         lst.push(parseInt(lst_raw[i].trim()));
     }
-    display(mcs(lst, 0, lst.length-1), lst);
+    display(mcs_divide_and_conquer(lst, 0, lst.length-1), lst);
+    console.log("Kadane: " + mcs_kadane(lst));
+    let possible_ends = document.querySelectorAll(".possible_end");
+    possible_ends[possible_ends.length-1].style.backgroundColor = "green";
 }
 
 function findBoundsForSum(sum, lst) {
@@ -80,4 +112,26 @@ function display(sum, lst) {
     }
     list_string += "]<br><strong>" + sum + "</strong>";
     output.innerHTML = list_string;
+}
+
+const kadaneTable = document.getElementById("t");
+function addToTable(element, mi, overall, new_sub_list) {
+    let row = document.createElement("tr");
+    let element_td = document.createElement("td");
+    element_td.appendChild(document.createTextNode(element));
+    let mi_td = document.createElement("td");
+    mi_td.appendChild(document.createTextNode(mi));
+    let overall_td = document.createElement("td");
+    overall_td.appendChild(document.createTextNode(overall));
+    row.appendChild(element_td);
+    row.appendChild(mi_td);
+    row.appendChild(overall_td);
+
+    if (new_sub_list)
+        row.style.backgroundColor = "pink";
+
+    if (mi == overall)
+        row.className = "possible_end";
+
+    kadaneTable.appendChild(row);
 }

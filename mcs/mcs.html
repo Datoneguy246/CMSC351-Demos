@@ -13,6 +13,22 @@
     <main>
         <p id="mcs">Maximum Contiguous Sum: </p>
         <p><i>This calculation uses the divide and conquer approach</i></p>
+        <br><strong>Kadane's Algorithm Table</strong><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>List</th>
+                    <th>M<sub>i</sub></th>
+                    <th>M</th>
+                </tr>
+            </thead>
+            <tbody id="t">
+                
+            </tbody>
+        </table>
+        <br>
+        <p style="background-color: pink"><i>This row signifies the start of a new contiguous sub-list Kadane's is considering. Occurs when List[i] > M<sub>i-1</sub> + List[i]</i></p>
+        <p style="background-color: green"><i>This row is the final row of the contiguous sub-list that contains the maximum sum</i></p>
     </main>
     <footer>
         <hr>
