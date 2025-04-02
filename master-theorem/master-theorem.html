@@ -139,12 +139,12 @@
         solution.innerHTML += "<br><br>Final Answer:<div id='final'></div>";
         switch (chosenCase) {
             case 1:
-                katex.render("T(n) = \\Theta(n^" + logab + ")", document.getElementById('final'), {
+                katex.render("T(n) = \\Theta(n^{" + logab + "})", document.getElementById('final'), {
                     throwOnError: false
                 });
                 break;
             case 2:
-                katex.render("T(n) = \\Theta(n^" + logab + "\\lg n)", document.getElementById('final'), {
+                katex.render("T(n) = \\Theta(n^{" + logab + "}\\lg n)", document.getElementById('final'), {
                     throwOnError: false
                 });
                 break;
