@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CMSC351 Algorithms</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+        integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+        integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+        crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+        integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+</head>
+<header>
+    <h1>Master Theorem - Practice Problems</h1>
+    <button onclick="gen()">Generate Problem</button> <button onclick="sol()">Show Solution</button>
+    <hr>
+</header>
+<main>
+    <div id="out"></div><br>
+    <div id="sol" style="display: none;">Solution:</div>
+</main>
+<footer>
+    <hr>
+    <p>&copy;Declan J. Scott 2025</p>
+</footer>
+<script>
+    const fn = ["n", "n \\lg n", "n^2", "n^3", "\\lg n", "1", "\\sqrt{n}", "n^{1/3}", "n^2 + n \\lg n", "n^3 \\lg n"];
+    const c = [1, 1, 2, 3, 0, 0, 1 / 2, 1 / 3, 2, 3];
+    const k = [0, 1, 0, 0, 1, 0, 0, 0, 0, 1];
+    const out = document.getElementById("out");
+    const solution = document.getElementById("sol");
+
+    function logBase(x, base = Math.E) {
+        // Input validation
+        if (typeof x !== 'number' || typeof base !== 'number') {
+            throw new Error('Both arguments must be numbers');
+        }
+
+        if (x <= 0) {
+            throw new Error('The value x must be positive');
+        }
+
+        if (base <= 0 || base === 1) {
+            throw new Error('The base must be positive and not equal to 1');
+        }
+
+        // Calculate logarithm using change of base formula:
+        // log_base(x) = log(x) / log(base)
+        // where log is the natural logarithm (ln)
+        return Math.log(x) / Math.log(base);
+    }
+
+    function gen() {
+        out.innerHTML = "";
+        solution.style = "display: none;";
+
+        let b = (Math.round(Math.random() * 4)) + 2;
+        let a = Math.random() > 0.3 ? Math.pow(b, Math.round(Math.random() * 3)) : b + Math.round((Math.random() * 4)) - 2;
+        let func_i = Math.round(Math.random() * (fn.length - 1));
+        let func = fn[func_i];
+
+        let problem = "T(n) = " + a + "T(\\frac{n}{" + b + "}) + " + func;
+        katex.render(problem, out, {
+            throwOnError: false
+        });
+        // out.innerHTML = problem;
+
+        solution.innerHTML = "Solution:<br><br>We can observe the following:<ul><li id='a'></li><li id='b'></li><li id='fn'></li></ul>";
+        katex.render("a = " + a, document.getElementById('a'), {
+            throwOnError: false
+        });
+        katex.render("b = " + b, document.getElementById('b'), {
+            throwOnError: false
+        });
+        katex.render("f(n) = " + func, document.getElementById('fn'), {
+            throwOnError: false
+        });
+        solution.innerHTML += "<br><br>We can then calculate: <div id='log'></div>";
+        let logab = logBase(a, b);
+        katex.render("\\log_{b}{a} = \\log_{" + b + "}{" + a + "} = " + logab, document.getElementById('log'), {
+            throwOnError: false
+        });
+        solution.innerHTML += "<br>Additionally we know: <div id='1'></div><br> ...so <div id='c'></div>";
+        let c_val = c[func_i];
+        let k_val = k[func_i];
+        let isCase2f = k_val != 0;
+        katex.render("f(n) = " + (isCase2f ? "\\Theta(n^{" + c_val + "}\\lg^{" + k_val + "}n)" : "\\Theta(n^{" + c_val + "})"), document.getElementById('1'), {
+            throwOnError: false
+        });
+        katex.render("c = " + c_val + (isCase2f ? ", k = " + k_val : ""), document.getElementById('c'), {
+            throwOnError: false
+        });
+
+        let chosenCase = 0; // 1 - case 1, 2 - case 2, 3 - case 2f, 4 - case 3
+        solution.innerHTML += "<br><div id='case'></div>";
+        if (isCase2f) {
+            if (logab == c_val) {
+                chosenCase = 3;
+                solution.innerHTML += "As such, we will use Case 2f.";
+                katex.render("\\log_{" + b + "}{" + a + "} = " + c_val, document.getElementById('case'), {
+                    throwOnError: false
+                });
+            } else {
+                solution.innerHTML += "As such, we cannot use Case 2f. Admittedly, I lack the programming skill to try and come up with an algorithm that can solve this. Sorry! It's still probably possible.";
+                katex.render("\\log_{" + b + "}{" + a + "} \\neq " + c_val, document.getElementById('case'), {
+                    throwOnError: false
+                });
+                return;
+            }
+        } else {
+            if (logab == c_val) {
+                chosenCase = 2;
+                solution.innerHTML += "As such, we will use Case 2.";
+                katex.render("\\log_{" + b + "}{" + a + "} = " + c_val, document.getElementById('case'), {
+                    throwOnError: false
+                });
+            } else if (logab > c_val) {
+                chosenCase = 1;
+                solution.innerHTML += "As such, we will use Case 1.";
+                katex.render("\\log_{" + b + "}{" + a + "} > " + c_val + " \\& \\Theta(n^{" + c_val + "}) = \\mathcal{O}(n^{" + c_val + "})", document.getElementById('case'), {
+                    throwOnError: false
+                });
+            } else {
+                chosenCase = 4;
+                solution.innerHTML += "As such, we will use Case 3.";
+                katex.render("\\log_{" + b + "}{" + a + "} < " + c_val + " \\& \\Theta(n^{" + c_val + "}) = \\Omega(n^{" + c_val + "})", document.getElementById('case'), {
+                    throwOnError: false
+                });
+            }
+        }
+
+        solution.innerHTML += "<br><br>Final Answer:<div id='final'></div>";
+        switch (chosenCase) {
+            case 1:
+                katex.render("T(n) = \\Theta(n^" + logab + ")", document.getElementById('final'), {
+                    throwOnError: false
+                });
+                break;
+            case 2:
+                katex.render("T(n) = \\Theta(n^" + logab + "\\lg n)", document.getElementById('final'), {
+                    throwOnError: false
+                });
+                break;
+            case 3:
+                katex.render("T(n) = \\Theta(n^" + logab + "\\lg^{" + (k_val + 1) + "} n)", document.getElementById('final'), {
+                    throwOnError: false
+                });
+                break;
+            case 4:
+                katex.render("T(n) = \\Theta(" + func + ")", document.getElementById('final'), {
+                    throwOnError: false
+                });
+                break;
+        }
+    }
+
+    function sol() {
+        solution.style = "display: block;";
+    }
+</script>
+
+</html>
