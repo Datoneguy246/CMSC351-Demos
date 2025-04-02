@@ -95,7 +95,7 @@ function outputMsg(msg) {
 function addToOutput(lst, l, r, pkey) {
     let tempHTML = "[";
     for (let i = 0; i < lst.length; i++) {
-        let colour = i >= l && r <= r ? (lst[i] == pkey ? "green" : "red") : "black";
+        let colour = i >= l && i <= r ? (lst[i] == pkey ? "green" : "red") : "black";
         tempHTML += "<span style='color: " + colour + "'>" + lst[i] + "</span>";
         if (i < lst.length-1)
             tempHTML += ", ";
