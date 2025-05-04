@@ -1,0 +1,39 @@
+<div id="out"></div><br><br>
+<div id="out2"></div><br><br>
+<div id="out3"></div><br><br>
+<div id="out4"></div><br><br>
+<script src="graph.js"></script>
+<script>
+    let testMatrix1 = [
+        ["0","1","0","0"],
+        ["1","0","1","0"],
+        ["0","1","0","1"],
+        ["0","0","1","0"]
+    ];
+    let testMatrix2 = [
+        ["0","1","1","1","1","1"],
+        ["1","0","1","1","1","1"],
+        ["1","1","0","1","1","1"],
+        ["1","1","1","0","1","1"],
+        ["1","1","1","1","0","1"],
+        ["1","1","1","1","1","0"]
+    ];
+    let testMatrix3 = [
+        ["0","8","0","0"],
+        ["0","0","0","3"],
+        ["2","1","0","0"],
+        ["0","0","7","0"]
+    ];
+    let vMatrix3 = [
+        ["0","1","0","0"],
+        ["0","0","0","0"],
+        ["0","0","0","0"],
+        ["0","0","1","0"]
+    ];
+    window.onload = function() {
+        createGraph(testMatrix1, false, false, document.getElementById("out"));
+        createGraph(testMatrix2, true, false, document.getElementById("out2"));
+        createGraph(testMatrix3, true, true, document.getElementById("out3"));
+        createGraph(testMatrix3, true, true, document.getElementById("out4"), vMatrix3);
+    }
+</script>

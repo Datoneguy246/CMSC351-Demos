@@ -19,3 +19,14 @@ canvas {
     margin: auto;
     text-align: center;
 }
+
+.mat_in {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.inline {
+    display: inline-block;
+    vertical-align: middle;
+}
