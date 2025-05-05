@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CMSC351 Algorithms</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<header>
+    <h1>Depth First Traverse</h1>
+    <strong>Enter your graph as an adjacency matrix:</strong><br><br>
+    Vertex Count:  <input id="mat_n" type="number" value="0" class="mat_in"><br><br>
+    <div id="mat"></div><br>
+    <i>0 represents the absence of an edge, any other integer represents an unweighted, undirected edge.</i><br>
+    <br>
+    Enter your starting vertex: <input id="in_start" type="number" value="0"><br>
+    <button onclick="calc()">Calculate</button>
+    <hr>
+</header>
+<main>
+    <div id="out"></div>
+</main>
+<footer>
+    <hr>
+    <button onclick="showcode()">See code</a>
+</footer>
+<script src="../graph-visualizer/graph.js"></script>
+<script src="adj_mat.js"></script>
+<script src="dfs.js"></script>
+<script>
+    const startInput = document.getElementById("in_start");
+    startInput.addEventListener("input", function(event) {
+        let maxStart = Math.max(parseMatrix().length - 1, 0);
+        let targetVal = event.target.value;
+
+        if (targetVal < 0) {
+            startInput.value = 0;
+        }
+        else if (targetVal > maxStart) {
+            startInput.value = maxStart;
+        }
+    });
+    function showcode() {
+        // Set the cookie with a valid key=value format
+        document.cookie = "filename=./graphs/dfs.js; path=/"; // Cookie is set for the entire domain
+
+        // Create an anchor element and navigate to linter.html
+        let a = document.createElement('a');
+        a.setAttribute("href", "../highlighter.html");
+        a.click();
+    }   
+    function calc() {
+        document.getElementById("out").innerHTML = "";
+        let g = parseMatrixAsIntegers();
+        cleara(g);
+        console.log(DFS(g, startInput.value));
+    }
+</script>
+
+</html>

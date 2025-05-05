@@ -5,13 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Output</title>
+    <link href="./style.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
 </head>
 
 <body>
+    <div>
+        <strong>General notes regarding my code:</strong>
+        <ul>
+            <li>All of my code is in JavaScript, so there's some weird JS syntax in places. Sometimes I store data in lists (denoted with <code class="language-javascript">[]</code>)
+            and sometimes I use traditional arrays (denoted with <code class="language-javascript">new Array(length)</code>). For the most part, you can treat lists and arrays as
+            the same (unless I'm using a list to implement a queue or stack). Personally, I just find lists easier to work with.</li>
+            <li>This is the exact code the website runs, so there's some function calls in the algorithms for displaying visualizations on the webpage. I've done my best to mark all of these with 
+                <code class="language-javascript">// DISPLAY</code> or something similar. Those lines can all be ignored.
+            </li>
+            <li>I also feel obligated to mention that I was able to do all this <i>super sick</i> syntax highlighting with <a href="https://prismjs.com/">Prism.js</a>. Super cool library.</li>
+        </ul>
+    </div>
     <pre id="output" class="language-javascript"></pre>
-
+    <footer>
+        <hr>
+        <p id="cpy"></p>
+    </footer>
+    <script>
+        const d = new Date();
+        document.getElementById("cpy").innerHTML = "&copy; Declan J. Scott " + d.getFullYear(); // This copyright never gonna expire babay!
+    </script>
     <script>
         async function highlightScript(file) {
             try {
